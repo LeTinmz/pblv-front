@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { globalStyles } from "../utils/globalStyles";
 import {
   View,
@@ -15,16 +15,30 @@ import {
 import { GoNextButton } from "../components/GoNextButton";
 
 export const LoginPage = ({ navigation }) => {
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    navigation.navigate("Home", { userName });
+  };
   return (
-    <SafeAreaView>
+    <SafeAreaView style={globalStyles.container}>
       <Text style={globalStyles.title}>Coucou bg !</Text>
-      <TextInput style={styles.input} placeholder="Username" />
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={userName}
+        onChangeText={(text) => setUserName(text)}
+      />
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry={true}
+        value={password}
+        onChangeText={(text) => setPassword(text)}
       />
-      <GoNextButton label="Login" onPress={() => navigation.navigate("Home")} />
+      <GoNextButton label="Login" onPress={handleLogin} />
+      <Text style={globalStyles.lightText}>Pas encore de compte ?</Text>
       <GoNextButton
         label="Register"
         onPress={() => navigation.navigate("Register")}
