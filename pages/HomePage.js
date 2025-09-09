@@ -18,8 +18,8 @@ export const HomePage = ({ route }) => {
       </Text>
       <View style={styles.buttonContainer}>
         <HomePageButton />
-        <HomePageButton />
-        <HomePageButton />
+        <HomePageButton imgSrc={require("../assets/location-icon.png")} />
+        <HomePageButton imgSrc={require("../assets/ellipsis-icon.png")} />
         <HomePageButton />
       </View>
     </SafeAreaView>

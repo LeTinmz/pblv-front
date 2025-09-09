@@ -31,7 +31,6 @@ export const RegisterPage = ({ navigation }) => {
       [field]: value,
     }));
 
-    // Effacer l'erreur du champ modifié
     if (errors[field]) {
       setErrors((prev) => ({
         ...prev,
