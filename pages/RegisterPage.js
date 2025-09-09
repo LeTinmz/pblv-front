@@ -94,7 +94,13 @@ export const RegisterPage = ({ navigation }) => {
       Alert.alert(
         "Inscription réussie",
         "Votre compte a été créé avec succès !",
-        [{ text: "OK", onPress: () => console.log("Redirection vers login") }]
+        [
+          {
+            text: "OK",
+            onPress: () =>
+              navigation.navigate("Home", { userName: formData["firstName"] }),
+          },
+        ]
       );
 
       // Reset du formulaire
