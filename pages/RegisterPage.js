@@ -12,14 +12,16 @@ import {
   SafeAreaView,
 } from "react-native";
 
+import api from "../utils/api";
+
 export const RegisterPage = ({ navigation }) => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
+    firstName: "Test",
+    lastName: "testLastName",
+    mail: "test@test.com",
+    phone: "0675753231",
+    password: "@RaD1z%HgSn76MzJ",
+    confirmPassword: "@RaD1z%HgSn76MzJ",
   });
 
   const [errors, setErrors] = useState({});
@@ -50,10 +52,10 @@ export const RegisterPage = ({ navigation }) => {
       newErrors.lastName = "Le nom est requis";
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = "L'email est requis";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Format d'email invalide";
+    if (!formData.mail.trim()) {
+      newErrors.mail = "L'email est requis";
+    } else if (!/\S+@\S+\.\S+/.test(formData.mail)) {
+      newErrors.mail = "Format d'email invalide";
     }
 
     if (!formData.phone.trim()) {
@@ -87,30 +89,28 @@ export const RegisterPage = ({ navigation }) => {
     setIsLoading(true);
 
     try {
-      // Simulation d'un appel API
-      await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      Alert.alert(
-        "Inscription réussie",
-        "Votre compte a été créé avec succès !",
-        [
-          {
-            text: "OK",
-            onPress: () =>
-              navigation.navigate("Home", { userName: formData["firstName"] }),
-          },
-        ]
-      );
+          const response = await api.post("auth/register", {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      mail: formData.mail,
+      // phone: formData.phone.toString(),
+      password: formData.password,
+    });
+      Alert.alert("Succès", "Inscription réussie ! Vous pouvez vous connecter.");
+      navigation.navigate("Login");
+    
 
       // Reset du formulaire
       setFormData({
         firstName: "",
         lastName: "",
-        email: "",
+        mail: "",
         phone: "",
         password: "",
         confirmPassword: "",
       });
+      
     } catch (error) {
       Alert.alert("Erreur", "Une erreur est survenue lors de l'inscription");
     } finally {
@@ -162,16 +162,16 @@ export const RegisterPage = ({ navigation }) => {
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Email *</Text>
               <TextInput
-                style={[styles.input, errors.email && styles.inputError]}
-                value={formData.email}
-                onChangeText={(value) => handleInputChange("email", value)}
+                style={[styles.input, errors.mail && styles.inputError]}
+                value={formData.mail}
+                onChangeText={(value) => handleInputChange("mail", value)}
                 placeholder="votre@email.com"
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
               />
-              {errors.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
+              {errors.mail && (
+                <Text style={styles.errorText}>{errors.mail}</Text>
               )}
             </View>
 
