@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html, body, #map { height:100%; margin:0; padding:0; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map', { zoomControl: true }).setView([45.71301, 5.12916], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19, attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    let meMarker = null;
+    let meCircle = null;
+    let firstFixDone = false;
+
+    function updateMe(lat, lng, accuracy) {
+      const latlng = [lat, lng];
+
+      if (!meMarker) {
+        meMarker = L.marker(latlng, { title: "Moi" }).addTo(map);
+      } else {
+        meMarker.setLatLng(latlng);
+      }
+
+      if (!meCircle) {
+        meCircle = L.circle(latlng, { radius: accuracy || 20 }).addTo(map);
+      } else {
+        meCircle.setLatLng(latlng);
+        if (accuracy) meCircle.setRadius(accuracy);
+      }
+
+      if (!firstFixDone) {
+        map.flyTo(latlng, 15, { duration: 0.7 });
+        firstFixDone = true;
+      }
+    }
+
+    // Reçoit les données depuis React Native
+    window.addEventListener('message', (event) => {
+      try {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'user_location') {
+          updateMe(msg.lat, msg.lng, msg.accuracy);
+        }
+      } catch(e) {}
+    });
+
+    // Compatibilité iOS/Android RN WebView (certaines versions utilisent ReactNativeWebView)
+    document.addEventListener('message', (event) => {
+      try {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'user_location') {
+          updateMe(msg.lat, msg.lng, msg.accuracy);
+        }
+      } catch(e) {}
+    });
+  </script>
+</body>
+</html>

@@ -45,7 +45,10 @@ export const HomePage = ({ navigation }) => {
       </Text>
       <View style={styles.buttonContainer}>
         <HomePageButton />
-        <HomePageButton imgSrc={require("../assets/location-icon.png")} />
+        <HomePageButton
+          imgSrc={require("../assets/location-icon.png")}
+          onPress={() => navigation.navigate("Map")}
+        />
         <HomePageButton imgSrc={require("../assets/ellipsis-icon.png")} />
         <HomePageButton
           imgSrc={require("../assets/user-icon.png")}
