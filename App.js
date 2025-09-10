@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { RegisterPage } from "./pages/RegisterPage";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { UserDetails } from "./pages/UserDetails";
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function App() {
             component={RegisterPage}
             options={{ title: "Inscription" }}
           />
+          <Stack.Screen name="Details" component={UserDetails} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

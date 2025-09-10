@@ -20,8 +20,8 @@ import {
 import { GoNextButton } from "../components/GoNextButton";
 
 export const LoginPage = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@poubellelavie.fr");
+  const [password, setPassword] = useState("admin123");
 
   const setUser = useUserStore((state) => state.setUser);
   const handleLogin = async () => {
