@@ -6,6 +6,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { RegisterPage } from "./pages/RegisterPage";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { UserDetails } from "./pages/UserDetails";
+import { MapWithInsets } from "./pages/MapWithInsets";
+import React from "react";
 
 const Stack = createStackNavigator();
 
@@ -21,6 +24,8 @@ export default function App() {
             component={RegisterPage}
             options={{ title: "Inscription" }}
           />
+          <Stack.Screen name="Details" component={UserDetails} />
+          <Stack.Screen name="Map" component={MapWithInsets} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

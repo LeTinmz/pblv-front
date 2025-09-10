@@ -2,6 +2,9 @@ import React, { useState } from "react";
 
 import { globalStyles } from "../utils/globalStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { fetchCurrentUser } from "../utils/fetchCurrentUser";
+import { useUserStore } from "../stores/userStore";
+import api from "../utils/api";
 import {
   View,
   Text,
@@ -15,12 +18,12 @@ import {
   Alert,
 } from "react-native";
 import { GoNextButton } from "../components/GoNextButton";
-import api from "../utils/api";
 
 export const LoginPage = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@poubellelavie.fr");
+  const [password, setPassword] = useState("admin123");
 
+  const setUser = useUserStore((state) => state.setUser);
   const handleLogin = async () => {
     console.log(email, password);
     try {
@@ -29,14 +32,23 @@ export const LoginPage = ({ navigation }) => {
         password: password,
       });
 
-      const token = response.data.token;
-      console.log("token", token);
-      //   await AsyncStorage.setItem("token", token);
+      const token = response.data.data.token;
 
+      await AsyncStorage.setItem("token", token);
+
+      const userData = await fetchCurrentUser();
+      if (userData) {
+        setUser(userData);
+        await AsyncStorage.setItem("user", JSON.stringify(userData));
+      } else {
+        Alert.alert(
+          "Connexion réussie, mais impossible de récupérer les informations utilisateur."
+        );
+        return;
+      }
       Alert.alert("Connexion réussie ✅", `Token : ${token}`);
       //   alert("Connexion réussie ✅", `Token : ${token}`);
 
-      // navigation vers la page suivante
       navigation.navigate("Home", { userName: email });
     } catch (error) {
       console.error(error);
