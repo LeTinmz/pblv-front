@@ -35,8 +35,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonContainer: {
-    flexDirection: "row", // aligne les boutons horizontalement
-    flexWrap: "wrap", // passe à la ligne suivante si espace insuffisant
-    justifyContent: "space-between", // espace égal entre les boutons
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
   },
 });
