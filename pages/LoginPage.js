@@ -1,4 +1,7 @@
+
 import React, { useState } from "react";
+=======
+
 import { globalStyles } from "../utils/globalStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -17,6 +20,7 @@ import { GoNextButton } from "../components/GoNextButton";
 import api from "../utils/api";
 
 export const LoginPage = ({ navigation }) => {
+
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -68,6 +72,7 @@ export const LoginPage = ({ navigation }) => {
 			/>
 		</SafeAreaView>
 	);
+
 };
 
 const styles = StyleSheet.create({
