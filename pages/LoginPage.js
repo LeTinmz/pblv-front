@@ -28,10 +28,10 @@ export const LoginPage = ({ navigation }) => {
         mail: email,
         password: password,
       });
-      console.log(response);
+
       const token = response.data.token;
       console.log("token", token);
-      await AsyncStorage.setItem("token", token);
+      //   await AsyncStorage.setItem("token", token);
 
       Alert.alert("Connexion réussie ✅", `Token : ${token}`);
       //   alert("Connexion réussie ✅", `Token : ${token}`);
