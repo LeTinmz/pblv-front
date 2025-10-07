@@ -13,7 +13,7 @@ import { useUserStore } from "../stores/userStore";
 import { useState, useEffect } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { fetchCurrentUser } from "../utils/fetchCurrentUser";
+import { fetchCurrentUser } from "../services/fetchCurrentUser";
 
 export const HomePage = ({ navigation }) => {
   const setUser = useUserStore((state) => state.setUser);

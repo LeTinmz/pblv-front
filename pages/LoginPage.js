@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { globalStyles } from "../utils/globalStyles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { fetchCurrentUser } from "../utils/fetchCurrentUser";
+import { fetchCurrentUser } from "../services/fetchCurrentUser";
 import { useUserStore } from "../stores/userStore";
 import api from "../utils/api";
 import {
