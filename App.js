@@ -10,6 +10,8 @@ import { UserDetails } from "./pages/UserDetails";
 import { MapWithInsets } from "./pages/MapWithInsets";
 import { SignalForm } from "./pages/SignalForm";
 import React from "react";
+import ExpoCameraExample from "./components/ExpoCameraExample";
+import QRCodeScan from "./components/QRCodeScan";
 
 const Stack = createStackNavigator();
 
@@ -27,7 +29,9 @@ export default function App() {
             options={{ title: "Inscription" }}
           />
           <Stack.Screen name="Details" component={UserDetails} />
+          <Stack.Screen name="Camera" component={ExpoCameraExample} />
           <Stack.Screen name="Map" component={MapWithInsets} />
+          <Stack.Screen name="Scan" component={QRCodeScan} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
