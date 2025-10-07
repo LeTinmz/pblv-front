@@ -57,6 +57,9 @@ export const DashBoard = ({ navigation }) => {
           onPress={() => navigation.navigate("Details")}
         />
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
+        <Text>Caméra</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };

@@ -7,6 +7,7 @@ import {
   ScrollView,
   Platform,
   StatusBar,
+  TouchableOpacity,
 } from "react-native";
 import { HomePageButton } from "../components/HomePageButton";
 import { useUserStore } from "../stores/userStore";
@@ -41,7 +42,8 @@ export const HomePage = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>
-        coucou depuis home, {user.username} ! Bio : {user?.bio || "Pas de bio"}
+        coucou depuis home, {user.username} ! Bio : {user?.bio || "Pas de bio"},
+        gros fdp
       </Text>
       <View style={styles.buttonContainer}>
         <HomePageButton
@@ -52,12 +54,15 @@ export const HomePage = ({ navigation }) => {
           imgSrc={require("../assets/location-icon.png")}
           onPress={() => navigation.navigate("Map")}
         />
-        <HomePageButton imgSrc={require("../assets/ellipsis-icon.png")} />
+        <HomePageButton imgSrc={require("../assets/calendar-icon.png")} />
         <HomePageButton
           imgSrc={require("../assets/user-icon.png")}
           onPress={() => navigation.navigate("Details")}
         />
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
+        <Text>Caméra</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
