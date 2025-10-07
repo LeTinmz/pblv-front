@@ -19,8 +19,20 @@ export default function QRCodeScan({ navigation }) {
   const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
     try {
-      const response = await api.get(data);
-      const bin = response.data;
+      if (!data.startsWith("http://") && !data.startsWith("https://")) {
+        Alert.alert(
+          "QR Code invalide",
+          "L’URL scannée n’est pas valide pour l’API."
+        );
+        setScanned(false);
+        return;
+      }
+
+      const response = await fetch(data);
+      if (!response.ok) throw new Error("Network response was not ok");
+
+      const bin = await response.json();
+      Alert.alert("Succès", `Poubelle trouvée: ${bin.community}`);
       navigation.navigate("SignalForm", { scannedBin: bin });
     } catch (error) {
       console.error(error);
@@ -32,7 +44,7 @@ export default function QRCodeScan({ navigation }) {
   return (
     <View style={styles.container}>
       <CameraView
-        style={StyleSheet.absoluteFill} // <- pas besoin de styles.absoluteFill
+        style={StyleSheet.absoluteFill}
         facing="back"
         barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
         onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
