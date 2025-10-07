@@ -8,6 +8,7 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { UserDetails } from "./pages/UserDetails";
 import { MapWithInsets } from "./pages/MapWithInsets";
+import { SignalForm } from "./pages/SignalForm";
 import React from "react";
 
 const Stack = createStackNavigator();
@@ -19,6 +20,7 @@ export default function App() {
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={LoginPage} />
           <Stack.Screen name="Home" component={HomePage} />
+          <Stack.Screen name="Signalement" component={SignalForm} />
           <Stack.Screen
             name="Register"
             component={RegisterPage}

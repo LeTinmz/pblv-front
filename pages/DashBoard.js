@@ -15,10 +15,10 @@ import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { fetchCurrentUser } from "../utils/fetchCurrentUser";
 
-export const HomePage = ({ navigation }) => {
+export const DashBoard = ({ navigation }) => {
   const setUser = useUserStore((state) => state.setUser);
   const user = useUserStore((state) => state.user);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadUser = async () => {
@@ -38,21 +38,20 @@ export const HomePage = ({ navigation }) => {
     };
     loadUser();
   }, []);
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>
-        coucou depuis home, {user.username} ! Bio : {user?.bio || "Pas de bio"}
-      </Text>
+      <Text style={styles.title}>coucou depuis home,{user.username}, fdp</Text>
       <View style={styles.buttonContainer}>
-        <HomePageButton
-          imgSrc={require("../assets/bin-icon.png")}
-          onPress={() => navigation.navigate("Signalement")}
-        />
+        <HomePageButton onPress={() => navigation.navigate("Signalement")} />
         <HomePageButton
           imgSrc={require("../assets/location-icon.png")}
           onPress={() => navigation.navigate("Map")}
         />
-        <HomePageButton imgSrc={require("../assets/ellipsis-icon.png")} />
+        <HomePageButton
+          imgSrc={require("../assets/calendar-icon.png")}
+          onPress={() => navigation.navigate("Calendar")}
+        />
         <HomePageButton
           imgSrc={require("../assets/user-icon.png")}
           onPress={() => navigation.navigate("Details")}
