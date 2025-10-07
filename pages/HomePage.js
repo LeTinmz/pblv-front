@@ -14,7 +14,10 @@ import { useUserStore } from "../stores/userStore";
 import { useState, useEffect } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import BinQRCode from "../components/BinQRCode";
 import { fetchCurrentUser } from "../services/fetchCurrentUser";
+
 
 export const HomePage = ({ navigation }) => {
   const setUser = useUserStore((state) => state.setUser);
@@ -63,6 +66,16 @@ export const HomePage = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
         <Text>Caméra</Text>
       </TouchableOpacity>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around",
+          marginTop: 20,
+        }}
+      >
+        <BinQRCode binId={"066092bf-4bb2-4632-843d-4471dc3295c7"} />
+        <BinQRCode binId={"0a9734f7-6670-4c67-97fd-ad8841cfe132"} />
+      </View>
     </SafeAreaView>
   );
 };
