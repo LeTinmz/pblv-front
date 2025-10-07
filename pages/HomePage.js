@@ -44,7 +44,10 @@ export const HomePage = ({ navigation }) => {
         coucou depuis home, {user.username} ! Bio : {user?.bio || "Pas de bio"}
       </Text>
       <View style={styles.buttonContainer}>
-        <HomePageButton />
+        <HomePageButton
+          imgSrc={require("../assets/bin-icon.png")}
+          onPress={() => navigation.navigate("Signalement")}
+        />
         <HomePageButton
           imgSrc={require("../assets/location-icon.png")}
           onPress={() => navigation.navigate("Map")}
