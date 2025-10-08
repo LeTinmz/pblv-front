@@ -18,7 +18,6 @@ export const formatCollectCentersForMap = (centers) => {
 
   return centers
     .filter((center) => {
-      // Filtrer les centres sans coordonnées valides
       const hasValidCoords = center.latitude && center.longitude;
       if (!hasValidCoords) {
         console.warn(`Centre sans coordonnées: ${center.name}`);

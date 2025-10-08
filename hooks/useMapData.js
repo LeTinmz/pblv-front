@@ -26,23 +26,18 @@ export const useMapData = (options = {}) => {
     totalPoints: 0,
   });
 
-  /**
-   * Charge toutes les données (centres et bins)
-   */
   const loadAll = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
-      console.log("🔄 Chargement de toutes les données...");
+      console.log("Chargement de toutes les données...");
 
-      // Charger en parallèle
       const [rawCenters, rawBins] = await Promise.all([
         fetchCollectCenters(),
         fetchBins(),
       ]);
 
-      // Traiter les centres
       let validCenters = [];
       if (rawCenters && rawCenters.length > 0) {
         const formatted = formatCollectCentersForMap(rawCenters);
@@ -52,7 +47,6 @@ export const useMapData = (options = {}) => {
         setCenters([]);
       }
 
-      // Traiter les bins
       let validBins = [];
       if (rawBins && rawBins.length > 0) {
         const formatted = formatBinsForMap(rawBins);
@@ -62,7 +56,6 @@ export const useMapData = (options = {}) => {
         setBins([]);
       }
 
-      // Calculer les stats
       const binsStatsData =
         validBins.length > 0 ? getBinsStats(validBins) : null;
 
@@ -74,14 +67,14 @@ export const useMapData = (options = {}) => {
       });
 
       console.log(
-        `✅ Chargement terminé: ${validCenters.length} centres, ${validBins.length} bins`
+        `Chargement terminé: ${validCenters.length} centres, ${validBins.length} bins`
       );
 
       if (validCenters.length === 0 && validBins.length === 0) {
         setError("Aucune donnée disponible");
       }
     } catch (err) {
-      console.error("❌ Erreur loadAll:", err);
+      console.error("Erreur loadAll:", err);
       setError(err.message || "Erreur de chargement");
       setCenters([]);
       setBins([]);
@@ -90,9 +83,6 @@ export const useMapData = (options = {}) => {
     }
   }, []);
 
-  /**
-   * Charge uniquement les centres
-   */
   const loadCenters = useCallback(async () => {
     try {
       setLoading(true);
@@ -110,16 +100,13 @@ export const useMapData = (options = {}) => {
         }));
       }
     } catch (err) {
-      console.error("❌ Erreur loadCenters:", err);
+      console.error("Erreur loadCenters:", err);
       setError(err.message);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  /**
-   * Charge uniquement les bins
-   */
   const loadBins = useCallback(async () => {
     try {
       setLoading(true);
@@ -140,23 +127,17 @@ export const useMapData = (options = {}) => {
         }));
       }
     } catch (err) {
-      console.error("❌ Erreur loadBins:", err);
+      console.error("Erreur loadBins:", err);
       setError(err.message);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  /**
-   * Recharge toutes les données
-   */
   const refresh = useCallback(() => {
     return loadAll();
   }, [loadAll]);
 
-  /**
-   * Filtre les bins par type de déchet
-   */
   const filterBinsByType = useCallback(
     (garbageType) => {
       if (!garbageType) return bins;
@@ -170,9 +151,6 @@ export const useMapData = (options = {}) => {
     [bins]
   );
 
-  /**
-   * Filtre les centres par type de déchet accepté
-   */
   const filterCentersByGarbageType = useCallback(
     (garbageType) => {
       if (!garbageType) return centers;
@@ -188,9 +166,6 @@ export const useMapData = (options = {}) => {
     [centers]
   );
 
-  /**
-   * Recherche dans tous les points
-   */
   const searchAll = useCallback(
     (query) => {
       if (!query || query.trim() === "") {
@@ -217,7 +192,6 @@ export const useMapData = (options = {}) => {
     [centers, bins]
   );
 
-  // Chargement automatique au montage
   useEffect(() => {
     if (autoLoad) {
       loadAll();
@@ -225,22 +199,15 @@ export const useMapData = (options = {}) => {
   }, [autoLoad, loadAll]);
 
   return {
-    // Données
     centers,
     bins,
-
-    // État
     loading,
     error,
     stats,
-
-    // Actions
     loadAll,
     loadCenters,
     loadBins,
     refresh,
-
-    // Filtres
     filterBinsByType,
     filterCentersByGarbageType,
     searchAll,

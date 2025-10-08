@@ -2,12 +2,7 @@ import { React } from "react";
 import { globalStyles } from "../utils/globalStyles";
 import { Alert, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-export const HomePageButton = ({
-  onPress = () => {
-    Alert.alert("Bravo, tu sais cliquer ! (grosse merde)");
-  },
-  imgSrc = require("../assets/bin-icon.png"),
-}) => {
+export const HomePageButton = ({ onPress, imgSrc }) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
       <Image style={styles.image} source={imgSrc}></Image>

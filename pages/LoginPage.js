@@ -46,13 +46,12 @@ export const LoginPage = ({ navigation }) => {
         );
         return;
       }
-      Alert.alert("Connexion réussie ✅", `Token : ${token}`);
-      //   alert("Connexion réussie ✅", `Token : ${token}`);
+      Alert.alert("Connexion réussie !", `Token : ${token}`);
 
       navigation.navigate("Home", { userName: email });
     } catch (error) {
       console.error(error);
-      Alert.alert("Erreur ❌", "Identifiants invalides ou problème serveur");
+      Alert.alert("Erreur", "Identifiants invalides ou problème serveur");
     }
   };
 

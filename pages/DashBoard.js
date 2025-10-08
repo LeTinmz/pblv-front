@@ -41,7 +41,7 @@ export const DashBoard = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>coucou depuis home,{user.username}, fdp</Text>
+      <Text style={styles.title}>coucou depuis home, {user.username}</Text>
       <View style={styles.buttonContainer}>
         <HomePageButton onPress={() => navigation.navigate("Signalement")} />
         <HomePageButton

@@ -44,8 +44,7 @@ export const HomePage = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>
-        coucou depuis home, {user.username} ! Bio : {user?.bio || "Pas de bio"},
-        gros fdp
+        coucou depuis home, {user.username} ! Bio : {user?.bio || "Pas de bio"}
       </Text>
       <View style={styles.buttonContainer}>
         <HomePageButton

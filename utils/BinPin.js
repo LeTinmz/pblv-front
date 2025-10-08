@@ -15,7 +15,6 @@ export const formatBinsForMap = (bins) => {
 
   return bins
     .filter((bin) => {
-      // Filtrer les bins sans coordonnées valides
       const hasValidCoords = bin.latitude && bin.longitude;
       if (!hasValidCoords) {
         console.warn(`Bin ${bin.id} sans coordonnées`);
@@ -136,7 +135,7 @@ export const getBinIconColor = (garbageType) => {
   if (type.includes("métal")) return "grey";
   if (type.includes("organique") || type.includes("bio")) return "orange";
 
-  return "red"; // Général / autres
+  return "red";
 };
 
 /**
@@ -168,11 +167,8 @@ export const getBinsStats = (bins) => {
   };
 
   bins.forEach((bin) => {
-    // Par type de déchet
     const type = bin.garbageType || "Non spécifié";
     stats.byType[type] = (stats.byType[type] || 0) + 1;
-
-    // Par communauté
     const community = bin.community || "Inconnue";
     stats.byCommunity[community] = (stats.byCommunity[community] || 0) + 1;
   });

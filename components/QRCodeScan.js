@@ -28,7 +28,7 @@ export default function QRCodeScan({ navigation }) {
     setLoading(true);
 
     try {
-      console.log("🔍 QR code scanné :", data);
+      console.log("QR code scanné :", data);
 
       if (!data.startsWith("http://") && !data.startsWith("https://")) {
         Alert.alert(

@@ -10,11 +10,11 @@ export const fetchCollectCenters = async () => {
     const token = await AsyncStorage.getItem("token");
 
     if (!token) {
-      console.warn("⚠️ Pas de token disponible pour fetchCollectCenters");
+      console.warn("Pas de token disponible pour fetchCollectCenters");
       throw new Error("Authentification requise");
     }
 
-    console.log("🔄 Requête API: GET collect-center");
+    console.log("Requête API: GET collect-center");
 
     const response = await api.get("collect-center", {
       headers: {
@@ -22,24 +22,21 @@ export const fetchCollectCenters = async () => {
       },
     });
 
-    // Vérifier la structure de la réponse
     if (!response.data) {
-      console.error("❌ Réponse API vide");
+      console.error("Réponse API vide");
       return [];
     }
 
-    // L'API peut retourner directement un tableau ou un objet avec une propriété data
     const centers = Array.isArray(response.data)
       ? response.data
       : response.data.data || response.data.content || [];
 
-    console.log(`✅ ${centers.length} centres reçus de l'API`);
+    console.log(`${centers.length} centres reçus de l'API`);
 
     return centers;
   } catch (error) {
     if (error.response) {
-      // Erreur de réponse serveur
-      console.error("❌ Erreur serveur:", {
+      console.error("Erreur serveur:", {
         status: error.response.status,
         data: error.response.data,
         url: error.config?.url,
@@ -47,15 +44,11 @@ export const fetchCollectCenters = async () => {
 
       if (error.response.status === 401) {
         console.error("🔒 Token invalide ou expiré");
-        // Optionnel: déclencher une déconnexion
-        // await AsyncStorage.removeItem("token");
       }
     } else if (error.request) {
-      // Erreur réseau - pas de réponse reçue
-      console.error("❌ Erreur réseau:", error.message);
+      console.error("Erreur réseau:", error.message);
     } else {
-      // Autre erreur
-      console.error("❌ Erreur:", error.message);
+      console.error("Erreur:", error.message);
     }
 
     return [];
@@ -84,7 +77,7 @@ export const fetchCollectCenterById = async (centerId) => {
     return response.data;
   } catch (error) {
     console.error(
-      `❌ Erreur fetch center ${centerId}:`,
+      `Erreur fetch center ${centerId}:`,
       error.response?.data || error.message
     );
     return null;
