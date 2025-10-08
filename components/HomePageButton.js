@@ -13,7 +13,7 @@ export const HomePageButton = ({
   onPress = () =>
     Alert.alert(
       "Fonctionnalité à venir !",
-      "Le calendrier des collectes sera bientôt disponible."
+      "Cette fonctionnalité sera bientôt disponible."
     ),
   imgSrc,
   label,
