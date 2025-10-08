@@ -1,35 +1,53 @@
-import { React } from "react";
-import { globalStyles } from "../utils/globalStyles";
-import { Alert, Image, StyleSheet, TouchableOpacity } from "react-native";
+import React from "react";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Text,
+  View,
+  Platform,
+} from "react-native";
 
-export const HomePageButton = ({
-  onPress = () => {
-    Alert.alert("Bravo, tu sais cliquer ! (grosse merde)");
-  },
-  imgSrc = require("../assets/bin-icon.png"),
-}) => {
+export const HomePageButton = ({ onPress, imgSrc, label }) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Image style={styles.image} source={imgSrc}></Image>
+    <TouchableOpacity style={styles.card} activeOpacity={0.8} onPress={onPress}>
+      <View style={styles.iconWrapper}>
+        <Image style={styles.image} source={imgSrc} />
+      </View>
+      <Text style={styles.label}>{label}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    marginTop: 20,
-    marginBottom: 20,
-    backgroundColor: "#007BFF",
-    padding: 10,
-    borderRadius: 5,
+  card: {
+    width: "47%",
+    backgroundColor: "#fff",
+    borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    width: 150,
-    height: 150,
+    paddingVertical: 25,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  iconWrapper: {
+    backgroundColor: "#E0ECFF",
+    borderRadius: 50,
+    padding: 15,
+    marginBottom: 10,
   },
   image: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     resizeMode: "contain",
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#1E293B",
   },
 });
