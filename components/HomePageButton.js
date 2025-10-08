@@ -6,9 +6,18 @@ import {
   Text,
   View,
   Platform,
+  Alert,
 } from "react-native";
 
-export const HomePageButton = ({ onPress, imgSrc, label }) => {
+export const HomePageButton = ({
+  onPress = () =>
+    Alert.alert(
+      "Fonctionnalité à venir !",
+      "Le calendrier des collectes sera bientôt disponible."
+    ),
+  imgSrc,
+  label,
+}) => {
   return (
     <TouchableOpacity style={styles.card} activeOpacity={0.8} onPress={onPress}>
       <View style={styles.iconWrapper}>

@@ -92,12 +92,6 @@ export const HomePage = ({ navigation }) => {
           <HomePageButton
             imgSrc={require("../assets/calendar-icon.png")}
             label="Calendrier"
-            onPress={() =>
-              Alert.alert(
-                "Fonctionnalité à venir !",
-                "Le calendrier des collectes sera bientôt disponible."
-              )
-            }
           />
           <HomePageButton
             imgSrc={require("../assets/user-icon.png")}
