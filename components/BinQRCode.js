@@ -7,7 +7,6 @@ export default function BinQRCode({ binId }) {
 
   return (
     <View style={styles.container}>
-      <Text>QR Code pour la poubelle {binId}</Text>
       <QRCode value={apiUrl} size={200} />
     </View>
   );

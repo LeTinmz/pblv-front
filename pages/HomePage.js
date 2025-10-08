@@ -18,7 +18,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import BinQRCode from "../components/BinQRCode";
 import { fetchCurrentUser } from "../services/fetchCurrentUser";
 
-
 export const HomePage = ({ navigation }) => {
   const setUser = useUserStore((state) => state.setUser);
   const user = useUserStore((state) => state.user);
@@ -73,8 +72,9 @@ export const HomePage = ({ navigation }) => {
           marginTop: 20,
         }}
       >
-        <BinQRCode binId={"066092bf-4bb2-4632-843d-4471dc3295c7"} />
-        <BinQRCode binId={"0a9734f7-6670-4c67-97fd-ad8841cfe132"} />
+        {/* Changer les QRCode si rechargement du back */}
+        <BinQRCode binId={"618d005c-f5f0-45c7-8ac8-533b2ce75eab"} />
+        <BinQRCode binId={"75a23d79-3a7b-4d19-9420-f7bb4ae17039"} />
       </View>
     </SafeAreaView>
   );
