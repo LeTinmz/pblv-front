@@ -24,24 +24,17 @@ export const MapWithFilters = () => {
   const [webReady, setWebReady] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // Compteurs
   const [centersCount, setCentersCount] = useState(0);
   const [binsCount, setBinsCount] = useState(0);
-
-  // Filtres
   const [showCenters, setShowCenters] = useState(true);
   const [showBins, setShowBins] = useState(true);
-
   const insets = useSafeAreaInsets();
 
-  // Source du fichier HTML
   const source =
     Platform.OS === "android"
       ? require("../assets/leaflet.html")
       : require("../assets/leaflet.html");
 
-  // ===== CHARGER LES DONNÉES =====
   useEffect(() => {
     if (!webReady) return;
 
@@ -49,22 +42,17 @@ export const MapWithFilters = () => {
       try {
         setLoading(true);
         setError(null);
-
-        console.log("📍 Chargement des données de la carte...");
-
-        // Charger les centres et bins en parallèle
+        console.log("Chargement des données de la carte...");
         const [rawCenters, rawBins] = await Promise.all([
           fetchCollectCenters(),
           fetchBins(),
         ]);
-
-        // Traiter les centres de collecte
         if (rawCenters && rawCenters.length > 0) {
           const formattedCenters = formatCollectCentersForMap(rawCenters);
           const validCenters = formattedCenters.filter(validateCollectCenter);
 
           console.log(
-            `✅ ${validCenters.length} centres valides sur ${rawCenters.length}`
+            `${validCenters.length} centres valides sur ${rawCenters.length}`
           );
 
           if (validCenters.length > 0) {
@@ -72,25 +60,22 @@ export const MapWithFilters = () => {
             setCentersCount(validCenters.length);
           }
         } else {
-          console.warn("⚠️ Aucun centre de collecte trouvé");
+          console.warn("Aucun centre de collecte trouvé");
           setCentersCount(0);
         }
 
-        // Traiter les bins
         if (rawBins && rawBins.length > 0) {
           const formattedBins = formatBinsForMap(rawBins);
           const validBins = formattedBins.filter(validateBin);
 
-          console.log(
-            `✅ ${validBins.length} bins valides sur ${rawBins.length}`
-          );
+          console.log(`${validBins.length} bins valides sur ${rawBins.length}`);
 
           if (validBins.length > 0) {
             sendToWeb("bins", { bins: validBins });
             setBinsCount(validBins.length);
           }
         } else {
-          console.warn("⚠️ Aucun bin trouvé");
+          console.warn("Aucun bin trouvé");
           setBinsCount(0);
         }
 
@@ -100,7 +85,7 @@ export const MapWithFilters = () => {
 
         setLoading(false);
       } catch (err) {
-        console.error("❌ Erreur chargement données:", err);
+        console.error("Erreur chargement données:", err);
         setError("Impossible de charger les données");
         setLoading(false);
       }
@@ -109,7 +94,6 @@ export const MapWithFilters = () => {
     loadMapData();
   }, [webReady]);
 
-  // ===== GÉRER LA LOCALISATION UTILISATEUR =====
   useEffect(() => {
     let locationSubscription;
 
@@ -123,13 +107,12 @@ export const MapWithFilters = () => {
         }
 
         if (webReady) {
-          // Position initiale
           const position = await Location.getCurrentPositionAsync({
             accuracy: Location.Accuracy.Balanced,
           });
 
           console.log(
-            "📍 Position utilisateur:",
+            "Position utilisateur:",
             position.coords.latitude.toFixed(6),
             position.coords.longitude.toFixed(6)
           );
@@ -140,7 +123,6 @@ export const MapWithFilters = () => {
             accuracy: position.coords.accuracy,
           });
 
-          // Suivre les changements de position
           locationSubscription = await Location.watchPositionAsync(
             {
               accuracy: Location.Accuracy.Balanced,
@@ -157,7 +139,7 @@ export const MapWithFilters = () => {
           );
         }
       } catch (err) {
-        console.error("❌ Erreur localisation:", err);
+        console.error("Erreur localisation:", err);
       }
     };
 
@@ -170,39 +152,36 @@ export const MapWithFilters = () => {
     };
   }, [webReady]);
 
-  // ===== GESTION DES FILTRES =====
   const toggleCentersFilter = () => {
     const newValue = !showCenters;
     setShowCenters(newValue);
     sendToWeb("toggle_centers", { show: newValue });
-    console.log("🔄 Centres:", newValue ? "affichés" : "masqués");
+    console.log("Centres:", newValue ? "affichés" : "masqués");
   };
 
   const toggleBinsFilter = () => {
     const newValue = !showBins;
     setShowBins(newValue);
     sendToWeb("toggle_bins", { show: newValue });
-    console.log("🔄 Bins:", newValue ? "affichés" : "masqués");
+    console.log("Bins:", newValue ? "affichés" : "masqués");
   };
 
-  // ===== ENVOYER DES DONNÉES À LA WEBVIEW =====
   const sendToWeb = (type, payload) => {
     const message = JSON.stringify({ type, ...payload });
     webref.current?.postMessage(message);
   };
 
-  // ===== GÉRER LES MESSAGES DE LA WEBVIEW =====
   const handleWebViewMessage = (event) => {
     try {
       const msg = JSON.parse(event.nativeEvent.data);
 
       if (msg.type === "web_ready") {
-        console.log("✅ WebView prête");
+        console.log("WebView prête");
         setWebReady(true);
       }
 
       if (msg.type === "map_ready") {
-        console.log("✅ Carte Leaflet initialisée");
+        console.log("Carte Leaflet initialisée");
       }
     } catch (err) {
       console.error("Erreur parsing message WebView:", err);
@@ -236,12 +215,11 @@ export const MapWithFilters = () => {
         onMessage={handleWebViewMessage}
         onError={(syntheticEvent) => {
           const { nativeEvent } = syntheticEvent;
-          console.error("❌ Erreur WebView:", nativeEvent);
+          console.error("Erreur WebView:", nativeEvent);
           setError("Erreur de chargement de la carte");
         }}
       />
 
-      {/* Indicateur de chargement */}
       {loading && (
         <View style={styles.loadingOverlay}>
           <ActivityIndicator size="large" color="#27ae60" />
@@ -249,10 +227,8 @@ export const MapWithFilters = () => {
         </View>
       )}
 
-      {/* Boutons de filtre */}
       {!loading && (centersCount > 0 || binsCount > 0) && (
         <View style={styles.filterContainer}>
-          {/* Filtre Centres de collecte */}
           {centersCount > 0 && (
             <TouchableOpacity
               style={[
@@ -283,7 +259,6 @@ export const MapWithFilters = () => {
             </TouchableOpacity>
           )}
 
-          {/* Filtre Bins */}
           {binsCount > 0 && (
             <TouchableOpacity
               style={[
@@ -316,7 +291,6 @@ export const MapWithFilters = () => {
         </View>
       )}
 
-      {/* Badge statistiques */}
       {!loading && (centersCount > 0 || binsCount > 0) && (
         <View style={styles.statsBadge}>
           <Text style={styles.statsBadgeText}>
@@ -326,7 +300,6 @@ export const MapWithFilters = () => {
         </View>
       )}
 
-      {/* Affichage des erreurs */}
       {error && !loading && (
         <View style={styles.errorBanner}>
           <Text style={styles.errorText}>⚠️ {error}</Text>

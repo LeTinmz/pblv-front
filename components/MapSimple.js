@@ -12,9 +12,6 @@ import * as Location from "expo-location";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useMapData } from "../hooks/useMapData";
 
-/**
- * Version simplifiée utilisant le hook useMapData
- */
 export const MapSimple = () => {
   const webref = useRef(null);
   const [webReady, setWebReady] = useState(false);
@@ -152,7 +149,6 @@ export const MapSimple = () => {
 
       {!loading && stats.totalPoints > 0 && (
         <>
-          {/* Filtres */}
           <View style={styles.filterContainer}>
             {stats.centersCount > 0 && (
               <TouchableOpacity
@@ -183,7 +179,6 @@ export const MapSimple = () => {
             )}
           </View>
 
-          {/* Stats badge */}
           <View style={styles.statsBadge}>
             <Text style={styles.statsBadgeText}>
               {stats.totalPoints} point{stats.totalPoints > 1 ? "s" : ""}

@@ -21,7 +21,15 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={LoginPage} />
-          <Stack.Screen name="Home" component={HomePage} />
+          <Stack.Screen
+            name="Home"
+            component={HomePage}
+            options={{
+              headerBackVisible: false,
+              title: "Accueil",
+              gestureEnabled: false,
+            }}
+          />
           <Stack.Screen name="Signalement" component={SignalForm} />
           <Stack.Screen
             name="Register"
@@ -34,7 +42,6 @@ export default function App() {
 
           <Stack.Screen name="Camera" component={ExpoCameraExample} />
           <Stack.Screen name="Scan" component={QRCodeScan} />
-
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
