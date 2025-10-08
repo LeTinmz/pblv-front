@@ -76,9 +76,7 @@ export const HomePage = ({ navigation }) => {
         <Text style={styles.title}>
           👋 Salut, <Text style={styles.username}>{user?.username}</Text> !
         </Text>
-        <Text style={styles.subtitle}>
-          Bio : {user?.bio || "Pas de bio pour le moment"}
-        </Text>
+        <Text style={styles.subtitle}>Citoyenne-moi tout là dedans, bbey</Text>
 
         <View style={styles.buttonGrid}>
           <HomePageButton
